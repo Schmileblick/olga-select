@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Olga Select</title>
+    <link rel="stylesheet" href="../dist/css/olga-select.css">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.5.1/dist/full.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div class="p-4">
+        <div class="mb-4">
+            <h1 class="text-2xl">Olga Select</h1>
+            <p class="text-xl">A small Vanilla JavaScript library that replaces native select elements.</p>
+        </div>
+
+        <div class="form-control w-full max-w-xs">
+            <label class="label">
+                <span class="label-text">Select your favorite starter</span>
+            </label>
+            <select name="selectElem" data-oselect class="select select-sm select-bordered">
+                <option value="bulbasaur">Bulbasaur</option>
+                <option value="charmader">Charmader</option>
+                <option value="squirtle">Squirtle</option>
+                <option value="chikorita">Chikorita</option>
+                <option value="cyndaquil">Cyndaquil</option>
+                <option value="totodile">Totodile</option>
+                <option value="treecko">Treecko</option>
+                <option value="torchic">Torchic</option>
+                <option value="mudkip">Mudkip</option>
+                <option value="turtwig">Turtwig</option>
+                <option value="chimchar">Chimchar</option>
+                <option value="piplup">Piplup</option>
+                <option value="snivy">Snivy</option>
+                <option value="tepig">Tepig</option>
+                <option value="oshawott">Oshawott</option>
+            </select>
+            <label class="label">
+                <span class="label-text-alt">&nbsp;</span>
+                <span class="label-text-alt">Chikorita is a good choice</span>
+            </label>
+        </div>
+
+        <div class="form-control w-full max-w-xs">
+            <label class="label">
+                <span class="label-text">Select your favorite starter</span>
+            </label>
+            <select name="selectElem" data-oselect multiple="multiple" class="select select-sm select-bordered">
+                <option value="bulbasaur" selected>Bulbasaur</option>
+                <option value="charmader">Charmader</option>
+                <option value="squirtle">Squirtle</option>
+                <option value="chikorita" selected>Chikorita</option>
+                <option value="cyndaquil">Cyndaquil</option>
+                <option value="totodile">Totodile</option>
+                <option value="treecko">Treecko</option>
+                <option value="torchic">Torchic</option>
+                <option value="mudkip">Mudkip</option>
+                <option value="turtwig">Turtwig</option>
+                <option value="chimchar">Chimchar</option>
+                <option value="piplup">Piplup</option>
+                <option value="snivy">Snivy</option>
+                <option value="tepig">Tepig</option>
+                <option value="oshawott">Oshawott</option>
+            </select>
+            <label class="label">
+                <span class="label-text-alt">&nbsp;</span>
+                <span class="label-text-alt">Chikorita is a good choice</span>
+            </label>
+        </div>
+    </div>
+    <script type="module" src="./index.js"></script>
+</body>
+</html>

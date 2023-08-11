@@ -1,0 +1,22 @@
+{
+  "name": "olga-select",
+  "version": "0.1.0",
+  "description": "A small Vanilla JavaScript library that replaces native select elements.",
+  "main": "olga-select.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Schmileblick/olga-select.git"
+  },
+  "keywords": [
+    "select"
+  ],
+  "author": "schmileblick",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Schmileblick/olga-select/issues"
+  },
+  "homepage": "https://github.com/Schmileblick/olga-select#readme"
+}

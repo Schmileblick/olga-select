@@ -1,0 +1,42 @@
+[data-oselect], .hidden {
+  display: none !important;
+}
+.oselect {
+  position: relative;
+  align-items: center;
+  font-weight: 400;
+  [data-oselect-dropdown] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+  }
+  input {
+    width: -webkit-fill-available;
+    margin: 0.5rem;
+  }
+  ul {
+    list-style: none;
+    scrollbar-width: none;
+    padding: 0;
+    max-height: 200px;
+    font-weight: 400;
+    box-sizing: border-box;
+    overflow: hidden;
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    li {
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+      &.selected {
+        font-weight: 600;
+      }
+      &:hover {
+        background-color: #F2F2F2;
+      }
+    }
+  }
+}
