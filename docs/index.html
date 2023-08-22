@@ -5,72 +5,165 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
     <title>Olga Select</title>
-    <link rel="stylesheet" href="../dist/css/olga-select.css">
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.5.1/dist/full.css" rel="stylesheet" type="text/css" />
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./demo/css/style.css">
+    <link rel="stylesheet" href="./demo/dist/css/olga-select.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.27.0/themes/prism.min.css" />
 </head>
 <body>
-    <div class="p-4">
-        <div class="mb-4">
-            <h1 class="text-2xl">Olga Select</h1>
-            <p class="text-xl">A small Vanilla JavaScript library that replaces native select elements.</p>
+    <main>
+
+        <div class="part">
+            <h1 class="title">Olga Select</h1>
+            <h4 class="subtitle">Searchable, Sortable, Updatable<br>and use your own CSS style 😎</h4>
+            <p class="subtitle">A small Vanilla JavaScript library for enhanced native select elements.</p>
         </div>
 
-        <div class="form-control w-full max-w-xs">
-            <label class="label">
-                <span class="label-text">Select your favorite starter</span>
-            </label>
-            <select name="selectElem" data-oselect class="select select-sm select-bordered">
-                <option value="bulbasaur">Bulbasaur</option>
-                <option value="charmader">Charmader</option>
-                <option value="squirtle">Squirtle</option>
-                <option value="chikorita">Chikorita</option>
-                <option value="cyndaquil">Cyndaquil</option>
-                <option value="totodile">Totodile</option>
-                <option value="treecko">Treecko</option>
-                <option value="torchic">Torchic</option>
-                <option value="mudkip">Mudkip</option>
-                <option value="turtwig">Turtwig</option>
-                <option value="chimchar">Chimchar</option>
-                <option value="piplup">Piplup</option>
-                <option value="snivy">Snivy</option>
-                <option value="tepig">Tepig</option>
-                <option value="oshawott">Oshawott</option>
-            </select>
-            <label class="label">
-                <span class="label-text-alt">&nbsp;</span>
-                <span class="label-text-alt">Chikorita is a good choice</span>
-            </label>
+        <div class="part">
+            <img src="./demo/olga-select.drawio.png" alt="olga select example">
+            <div class="buttons">
+                <a href="https://github.com/Schmileblick/olga-select/archive/refs/heads/main.zip" class="button">Download</a>
+                <a href="https://github.com/Schmileblick/olga-select" class="button outline">Github</a>
+            </div>
         </div>
 
-        <div class="form-control w-full max-w-xs">
-            <label class="label">
-                <span class="label-text">Select your favorite starter</span>
-            </label>
-            <select name="selectElem" data-oselect multiple="multiple" class="select select-sm select-bordered">
-                <option value="bulbasaur" selected>Bulbasaur</option>
-                <option value="charmader">Charmader</option>
-                <option value="squirtle">Squirtle</option>
-                <option value="chikorita" selected>Chikorita</option>
-                <option value="cyndaquil">Cyndaquil</option>
-                <option value="totodile">Totodile</option>
-                <option value="treecko">Treecko</option>
-                <option value="torchic">Torchic</option>
-                <option value="mudkip">Mudkip</option>
-                <option value="turtwig">Turtwig</option>
-                <option value="chimchar">Chimchar</option>
-                <option value="piplup">Piplup</option>
-                <option value="snivy">Snivy</option>
-                <option value="tepig">Tepig</option>
-                <option value="oshawott">Oshawott</option>
-            </select>
-            <label class="label">
-                <span class="label-text-alt">&nbsp;</span>
-                <span class="label-text-alt">Chikorita is a good choice</span>
-            </label>
+        <div class="main">
+            <div class="part">
+                <h2>Usage</h2>
+                
+                <p>1. Download and install the library</p>
+                <pre><code class="language-javascript">npm i olga-select</code></pre>
+                
+                <p>2. Include the library</p>
+                <pre><code class="language-html">&lt;script src="path/to/olga-select.js"&gt;&lt;/script&gt;</code></pre>
+                
+                <p>3. Include CSS style</p>
+                <pre><code class="language-html">&lt;link rel="stylesheet" href="path/to/olga-select.css"&gt;</code></pre>
+                
+                <p>4. Use oSelect function</p>
+                <pre><code class="language-javascript">new OlgaSelect(document.getElementById("your_select"));</code></pre>
+                
+                <p>🖐️ Bye default select element</p>
+                <select name="defaultFavoriteStarter" id="defaultFavoriteStarter" aria-label="Select your favorite starter">
+                    <option value="bulbasaur">Bulbasaur</option>
+                    <option value="charmader">Charmader</option>
+                    <option value="squirtle">Squirtle</option>
+                    <option value="chikorita">Chikorita</option>
+                    <option value="cyndaquil">Cyndaquil</option>
+                    <option value="totodile">Totodile</option>
+                    <option value="treecko">Treecko</option>
+                    <option value="torchic">Torchic</option>
+                    <option value="mudkip">Mudkip</option>
+                    <option value="turtwig">Turtwig</option>
+                    <option value="chimchar">Chimchar</option>
+                    <option value="piplup">Piplup</option>
+                    <option value="snivy">Snivy</option>
+                    <option value="tepig" selected>Tepig</option>
+                    <option value="oshawott">Oshawott</option>
+                </select>
+                
+                <p>💪 Welcome Olga select element</p>
+                <select name="favoriteStarter" aria-label="Select your favorite starter" id="simpleExample">
+                    <option value="bulbasaur">Bulbasaur</option>
+                    <option value="charmader">Charmader</option>
+                    <option value="squirtle">Squirtle</option>
+                    <option value="chikorita">Chikorita</option>
+                    <option value="cyndaquil">Cyndaquil</option>
+                    <option value="totodile">Totodile</option>
+                    <option value="treecko">Treecko</option>
+                    <option value="torchic">Torchic</option>
+                    <option value="mudkip">Mudkip</option>
+                    <option value="turtwig">Turtwig</option>
+                    <option value="chimchar">Chimchar</option>
+                    <option value="piplup">Piplup</option>
+                    <option value="snivy">Snivy</option>
+                    <option value="tepig" selected>Tepig</option>
+                    <option value="oshawott">Oshawott</option>
+                </select>
+                <p>Olga select includes a CSS style applicable with <kbd>.select</kbd>.</p>
+            </div>
+
+            <div class="part">
+                <h2>Options</h2>
+
+                <div>
+                    <h3>Placeholders</h3>
+                    <p>You can change three placeholders.</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Attribute</th>
+                                <th>Default</th>
+                                <th>Desc.</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><kbd>placeholder</kbd></td>
+                                <td>"Select an option"</td>
+                                <td>Placeholder for a select element with multiple attribute.</td>
+                            </tr>
+                            <tr>
+                                <td><kbd>selectedplaceholder</kbd></td>
+                                <td>&lt;qty&gt; "selected"</td>
+                                <td>Placeholder for a select element with multiple attribute when multiple options are selected (only the "selected" string can be changed).</td>
+                            </tr>
+                            <tr>
+                                <td><kbd>searchplaceholder</kbd></td>
+                                <td>"Search"</td>
+                                <td>Input element placeholder to search for options.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+<pre><code class="language-javascript">let options = {placeholder: "New placeholder", selectedplaceholder: "options", searchplaceholder: "John Doe"};
+new OlgaSelect(document.getElementById("your_select"), options);</code></pre>
+                    <p>Try it :</p>
+                    <select name="placeholderExample" multiple id="placeholderExample">
+                        <option value="first">I'm first option</option>
+                        <option value="second">I'm second option</option>
+                        <option value="third">I'm third option</option>
+                    </select>
+                </div>
+
+                <div>
+                    <h3>Searchable</h3>
+                    <p>You can add a seach to the select element</p>
+                    <pre><code class="language-javascript">let options = {searchable: true}<br>new OlgaSelect(document.getElementById("your_select"), options);</code></pre>
+                </div>
+
+                <div>
+                    <h3>Sortable</h3>
+                    <p>The list of options can be long. To find selected items easily, you can specify <kbd>sortable: true</kbd></p>
+                    <pre><code class="language-javascript">let options = {sortable: true}<br>new OlgaSelect(document.getElementById("your_select"), options);</code></pre>
+                </div>
+
+                <div>
+                    <h3>Updatable</h3>
+                    <p>You may need to update the list of options. Use <kbd>updatable</kbd></p>
+<pre><code class="language-javascript">let options = {updatable: true}
+new OlgaSelect(document.getElementById("your_select"), options);</code></pre>
+                </div>
+
+                <div>
+                    <h3>Your own CSS</h3>
+                    <p>Olga Select doesn't want to impose a CSS style. You can therefore use your own classes.</p>
+                    <p>Example with Bootstrap 5 :</p>
+<pre><code class="language-javascript">const options = {
+    classes: {
+        select: ["form-select"],
+        dropdown: ["bg-white", "border", "border-secondary"],
+        search: ["form-control"]
+    }
+};</code></pre>
+                </div>
+            </div>
         </div>
-    </div>
-    <script type="module" src="./index.js"></script>
+    
+    </main>
+
+    <script type="module" src="./demo/js/demo.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.27.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.27.0/components/prism-javascript.min.js"></script>
 </body>
 </html>

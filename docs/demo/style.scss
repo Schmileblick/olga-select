@@ -1,0 +1,131 @@
+$bg-background: #F1F0E8;
+$color: #282A3A;
+$default: #fff;
+$primary: #66a4f0;
+$muted: #474E68;
+$font-size-base: 1rem;
+$font-size-max: 2.25rem;
+$font-size-min: .85rem;
+$border-radius: 4px;
+
+@mixin media-max-width($min){
+	@media screen and (min-width:$min){
+		@content;
+	}
+}
+
+*, *::before, *::after {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    line-height: 1.5;
+    text-size-adjust: 100%;
+}
+
+body {
+    background-color: $bg-background;
+    width: 100%;
+    font-size: $font-size-base;
+    color: $color;
+}
+
+main {
+    width: 100;
+    padding: 0 0.5rem;
+
+    @include media-max-width(768px) {
+        width: 90%;
+        padding: 0;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    @include media-max-width(1024px) {
+        width: 80%;
+        padding: 0;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@for $i from 6 through 1 {
+    $range: $font-size-max - $font-size-min;
+    $step: ($range / 5) * (6 - $i); // Inverser l'ordre pour commencer à partir de h1
+    $font-size: $font-size-min + $step;
+
+    h#{$i} {
+        font-size: $font-size;
+        margin-top: 0;
+        margin-bottom: .5rem;
+    }
+}
+
+p, a, pre, select, .select, table {
+    margin-top: 0;
+    margin-bottom: .75rem;
+}
+
+p {
+    color: $muted;
+}
+
+a {
+    display: block;
+    width: auto;
+    background-color: $primary;
+    text-align: center;
+    margin: .25rem;
+    padding: .5rem 1.5rem;
+    border: none;
+    outline: none;
+    border-radius: $border-radius;
+    color: $default;
+    text-decoration: none;
+    &.outline {
+        background-color: transparent;
+        color: $primary;
+        outline: 1px solid $primary;
+    }
+    text-decoration: none;
+    &:hover {
+        opacity: 0.85;
+    }
+    @include media-max-width(768px) {
+        display: inline-block;
+    }
+}
+
+img {
+    width: 100%;
+    height: auto;
+}
+
+.title, .subtitle {
+    text-align: center;
+}
+
+.part {
+    margin-top: 0;
+    margin-bottom: 2rem;
+}
+
+@include media-max-width(768px) {
+    .buttons {
+        display: flex;
+        justify-content: space-around;
+    }
+}
+
+
+kbd {
+    font-family: monospace;
+    margin: 0 .25rem;
+	padding: .25rem .5rem;
+	border-radius: 4px;
+	border: 1px solid #cdcdcd;
+	background-color: #F5F5F5;
+}

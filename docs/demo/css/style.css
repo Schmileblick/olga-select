@@ -1,0 +1,143 @@
+*, *::before, *::after {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+     -moz-text-size-adjust: 100%;
+          text-size-adjust: 100%;
+}
+
+body {
+  background-color: #F1F0E8;
+  width: 100%;
+  font-size: 1rem;
+  color: #282A3A;
+}
+
+main {
+  width: 100;
+  padding: 0 0.5rem;
+}
+@media screen and (min-width: 768px) {
+  main {
+    width: 90%;
+    padding: 0;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+@media screen and (min-width: 1024px) {
+  main {
+    width: 80%;
+    padding: 0;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+h6 {
+  font-size: 0.85rem;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+h5 {
+  font-size: 1.13rem;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+h4 {
+  font-size: 1.41rem;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+h3 {
+  font-size: 1.69rem;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+h2 {
+  font-size: 1.97rem;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+h1 {
+  font-size: 2.25rem;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+p, a, pre, select, .select, table {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+}
+
+p {
+  color: #474E68;
+}
+
+a {
+  display: block;
+  width: auto;
+  background-color: #66a4f0;
+  text-align: center;
+  margin: 0.25rem;
+  padding: 0.5rem 1.5rem;
+  border: none;
+  outline: none;
+  border-radius: 4px;
+  color: #fff;
+  text-decoration: none;
+  text-decoration: none;
+}
+a.outline {
+  background-color: transparent;
+  color: #66a4f0;
+  outline: 1px solid #66a4f0;
+}
+a:hover {
+  opacity: 0.85;
+}
+@media screen and (min-width: 768px) {
+  a {
+    display: inline-block;
+  }
+}
+
+img {
+  width: 100%;
+  height: auto;
+}
+
+.title, .subtitle {
+  text-align: center;
+}
+
+.part {
+  margin-top: 0;
+  margin-bottom: 2rem;
+}
+
+@media screen and (min-width: 768px) {
+  .buttons {
+    display: flex;
+    justify-content: space-around;
+  }
+}
+kbd {
+  font-family: monospace;
+  margin: 0 0.25rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  border: 1px solid #cdcdcd;
+  background-color: #F5F5F5;
+}/*# sourceMappingURL=style.css.map */

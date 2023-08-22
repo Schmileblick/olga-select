@@ -1,238 +1,243 @@
-export function oSelect(selectElem, options) {
+import "../scss/olga-select.scss";
 
-    let select = oSelectDivSelectElem(selectElem, options.placeholder);
-    let dropdown = oSelectDropdownElem(options.classes.dropdown);
-    let list = oSelectListElem(selectElem, select, options.multiple_placeholder);
-    let search = oSelectSearchElem(list, options.classes.search, options.search_placeholder);
+const defaultOptions = {
+  placeholder: "Select an option",
+  selectedplaceholder: "selected",
+  searchplaceholder: "Search",
+  config: {
+    updatable: false,
+    sortable: false,
+    searchable: false,
+  },
+  classes: {
+    select: ["select"],
+    dropdown: ["modal"],
+    search: ["search"]
+  }
+};
 
-    dropdown.append(search);
-    dropdown.append(list);
-    select.append(dropdown);
+export default class OlgaSelect {
+  constructor(element, options) {
+    this.elem = element;
+    this.options = Object.assign({}, options || defaultOptions);
+    
+    this.placeholder = this.options.placeholder || "Select an option";
+    this.selectedplaceholder = this.options.selectedplaceholder || "selected";
+    this.searchplaceholder = this.options.searchplaceholder || "Search";
 
-    select.addEventListener("click", (ev) => dropdownEvent(ev, select, dropdown, options.placeholder));
-    insertAfter(select, selectElem);
-}
+    this.updatable = this.options.config?.updatable || false;
+    this.sortable = this.options.config?.sortable || false;
+    this.searchable = this.options.config?.searchable || false;
+    this.selectClass = this.options.classes?.select || ["select"];
+    this.dropdownClass = this.options.classes?.dropdown || ["modal"];
+    this.searchClass = this.options.classes?.search || ["search"];
 
-/**
- * Returns a division containing the same classes as the select element passed in parameter.
- * @param select select element
- * @param placeholder text specified in options.placeholder
- * @returns {HTMLDivElement}
- */
-function oSelectDivSelectElem(select, placeholder) {
-    let selectDiv = document.createElement("div");
-    selectDiv.classList = select.classList;
-    selectDiv.classList.add("oselect");
+    this.multiple = attr(this.elem, "multiple");
 
-    let span = document.createElement("span");
-    span.dataset.oselectPlaceholder = span.textContent = selectDiv.ariaPlaceholder = placeholder;
-    selectDiv.append(span);
 
-    return selectDiv;
-}
+    this.oSelect = null;
+    this.allOptionItems = [];
 
-/**
- * Returns a division corresponding to the options of a select element
- * @param classes classes specified in options.classes.dropdown
- * @returns {HTMLDivElement}
- */
-function oSelectDropdownElem(classes) {
-    let dropdown = document.createElement("div");
-    dropdown.dataset.oselectDropdown = "";
-    classes.forEach(dropdownClass => dropdown.classList.add(dropdownClass));
-    dropdown.classList.add("hidden");
-    return dropdown;
-}
+    this.generate();
+  };
 
-/**
- *
- * @returns {HTMLElement}
- */
-function oSelectListElem(selectElem, select, multiplePlaceholder) {
-    let list = document.createElement("ul");
-    for (const option of selectElem.options) {
-        list.append(oSelectOptionElem(selectElem, select, option, multiplePlaceholder));
-    }
-    sortSelectedOptions(list);
-    return list;
-}
+  generate() {
+    this.elem.classList.add("hidden");
 
-/**
- * Returns an input element to search item in options
- * @param list
- * @param classes classes specified in options.classes.search
- * @param placeholder text specified in options.search_placeholder
- * @returns {HTMLInputElement}
- */
-function oSelectSearchElem(list, classes, placeholder) {
-    let search = document.createElement("input");
-    search.placeholder = placeholder;
-    classes.forEach(searchClass => search.classList.add(searchClass));
-    search.addEventListener("keyup", () => searchInList(search, list));
-    return search;
-}
+    this.getData();
+    this.createDropdown();
+    this.addEvents();
+  };
 
-function oSelectOptionElem(selectElem, select, option, multiplePlaceholder) {
-    let placeholder = select.querySelector("[data-oselect-placeholder]");
-    let li = document.createElement("li");
-
-    li.textContent = option.text;
-    li.dataset.value = option.value;
-    if (option.selected) {
-        li.classList.add("selected");
-    }
-
-    let optionsSelected = countSelectedOption(option);
-
-    if (option.selected && selectElem.multiple && countSelectedOption(option) > 1) {
-        placeholder.dataset.oselectPlaceholder = placeholder.textContent = `${optionsSelected} ${multiplePlaceholder}`;
-    }
-
-    if ((option.selected && !selectElem.multiple) || (option.selected && selectElem.multiple && optionsSelected <=1)) {
-        placeholder.dataset.oselectPlaceholder = placeholder.textContent = option.text;
-    }
-
-    li.addEventListener("click", () => optionEvent(li, selectElem, option, placeholder, multiplePlaceholder));
-
-    return li;
-}
-
-/**
- * Makes dropdown element visible or not
- * @param ev event
- * @param select parent element
- * @param dropdown dropdown element
- */
-async function dropdownEvent(ev, select, dropdown, placeholder) {
-    if (ev.target === select || ev.target === select.querySelector("span")) {
-        if (dropdown.classList.contains("hidden")) {
-            dropdown.classList.remove("hidden");
-            await updateSelects(dropdown, placeholder);
-        } else {
-            dropdown.classList.add("hidden");
-        }
-        dropdownSpacing(select, dropdown);
-    }
-    closeListIfOutsideClick(select, dropdown);
-}
-
-async function optionEvent(li, selectElem, option, placeholder, multiplePlaceholder) {
-    if (selectElem.multiple) {
-        await optionEventIfMultiple(li, selectElem, option, placeholder, multiplePlaceholder);
-    } else {
-        await optionEventIfNotMultiple(li, selectElem, option, placeholder);
-    }
-    await resetSearchList(li.parentNode.parentNode.querySelector("input"), li.parentNode);
-    sortSelectedOptions(li.parentNode);
-}
-
-function searchInList(input, list) {
-    const items = Array.from(list.querySelectorAll("li"));
-    items.forEach(item => {
-        if (!item.dataset.value.includes(input.value)) {
-            if (!item.classList.contains("hidden")) item.classList.add("hidden");
-        } else {
-            if (item.classList.contains("hidden")) item.classList.remove("hidden");
-        }
+  getData() {
+    const options = this.elem.querySelectorAll("option");
+    let optionItems = [];
+    let selectedOptionItems = [];
+    
+    options.forEach(item => {
+      let itemData = {
+        text: item.innerText,
+        value: item.value,
+        selected: item.getAttribute("selected") !== null
+      }
+      
+      if (this.sortable) {
+        itemData.selected ? selectedOptionItems.push(itemData) : optionItems.push(itemData);
+      } else optionItems.push(itemData);
     });
-}
 
-async function resetSearchList(input, list) {
-    const items = Array.from(list.querySelectorAll("li"));
-    input.value = "";
-    items.forEach(item => {
+    this.allOptionItems = this.sortable ? selectedOptionItems.concat(optionItems) : optionItems;
+  };
+
+  createDropdown() {
+    let search = `<input type="text" class="${this.searchClass.join(" ")}" placeholder="${this.searchplaceholder}">`;
+    let spanPlaceholder = `<span>${this.placeholder}</span>`;
+    let list = `<ul></ul>`;
+
+    let dropdown = `<div class="${this.dropdownClass.join(" ")} dropdown hidden">`;
+    if (this.searchable) dropdown += search;
+    dropdown += list;
+    dropdown += `</div>`;
+
+    let oSelect = `<div class="${this.selectClass.join(" ")} oselect">`;
+    oSelect += spanPlaceholder;
+    oSelect += dropdown;
+    oSelect += `</div>`;
+
+    this.elem.insertAdjacentHTML("afterend", oSelect);
+
+    this.oSelect = this.elem.nextElementSibling;
+
+    this._addOptions();
+  };
+
+  addEvents() {
+    this.oSelect.addEventListener("click", (ev) => this._showableModal(ev));
+    this.oSelect.querySelectorAll("li").forEach(option => option.addEventListener("click", (ev) => this._clickedOption(ev, option)));
+    
+    if (this.searchable) {
+      let inputSearch = this.oSelect.querySelector("input");
+      inputSearch.addEventListener("keyup", () => this._searchOptions(inputSearch.value));
+    }
+
+    modalSpacing(this.oSelect);
+  }
+
+  _addOptions() {
+    let list = this.oSelect.querySelector("ul");
+    this.allOptionItems.forEach(item => {
+      list.appendChild(this._addOption(item));
+    });
+  };
+
+  _addOption(item) {
+    let option = document.createElement("li");
+    option.innerText = item.text;
+    option.dataset.value = item.value;
+    if (item.selected) option.classList.add("selected");
+    return option;
+  }
+
+  // Events
+
+  _showableModal(ev) {
+    let dropdown = this.oSelect.querySelector(".dropdown");
+
+    if (ev.target === this.oSelect || ev.target === this.oSelect.querySelector("span")) {
+      if (dropdown.classList.contains("hidden")) {
+        dropdown.classList.remove("hidden");
+      } else {
+        dropdown.classList.add("hidden");
+      }
+      if (this.updatable && !dropdown.classList.contains("hidden")) this._update();
+    }
+
+    window.addEventListener("click", (ev) => this._clickOutsideModal(ev, dropdown), true);
+  }
+
+  _clickedOption(ev, option) {
+    ev.preventDefault();
+    this.multiple ? this._isMultiple(option) : this._isNotMultiple(option);
+    this._changePlaceholder();
+    if (this.searchable) {
+      this._resetSearch();
+    }
+  }
+
+  _searchOptions(search) {
+    let list = this.oSelect.querySelectorAll("li");
+    list.forEach(item => {
+      if (!item.innerText.includes(search)) {
+        if (!item.classList.contains("hidden")) item.classList.add("hidden");
+      } else {
         if (item.classList.contains("hidden")) item.classList.remove("hidden");
+      }
     });
-}
+  }
 
-function optionEventIfNotMultiple(li, selectElem, option, placeholder) {
-    if (!li.classList.contains("selected")) {
-        for (const liElem of li.parentNode.children) {
-            if (liElem.classList.contains("selected")) {
-                liElem.classList.remove("selected");
-            }
+  _clickOutsideModal(ev, dropdown) {
+    if (ev.target !== this.oSelect) {
+      if (ev.target !== dropdown && !dropdown.contains(ev.target)) {
+        if (!dropdown.classList.contains("hidden")) {
+          dropdown.classList.add("hidden");
         }
-        li.classList.add("selected");
-        selectElem.selectedIndex = option.index;
-        placeholder.dataset.oselectPlaceholder = placeholder.textContent = option.text;
+      }
     }
-}
+  }
 
-function optionEventIfMultiple(li, selectElem, option, placeholder, multiplePlaceholder) {
-    if (li.classList.contains("selected")) {
-        li.classList.remove("selected");
-        option.attributes.removeNamedItem("selected");
+  _changePlaceholder() {
+    let options = this.elem.querySelectorAll("option");
+    let numberOfSelectedOptions = getNumberOfSelectedOptions(options);
+    if (this.multiple && numberOfSelectedOptions > 1) {
+      this.oSelect.querySelector("span").innerText = `${numberOfSelectedOptions} ${this.selectedplaceholder}`;
+    } else if (!this.multiple || this.multiple && numberOfSelectedOptions === 1) {
+      this.oSelect.querySelector("span").innerText = getSelectedOption(options).innerText;
     } else {
-        li.classList.add("selected");
-        option.setAttribute("selected", true);
+      this.oSelect.querySelector("span").innerText = this.placeholder;
     }
+  }
 
-    let optionsSelected = countSelectedOption(option);
-
-    if (optionsSelected > 1) {
-        placeholder.dataset.oselectPlaceholder = placeholder.textContent = `${optionsSelected} ${multiplePlaceholder}`;
+  _isMultiple(option) {
+    if (option.classList.contains("selected")) {
+      option.classList.remove("selected");
+      this.elem.querySelector(`option[value="${option.dataset.value}"]`).removeAttribute("selected");
     } else {
-        for (const liElem of li.parentNode.children) {
-            if (liElem.classList.contains("selected")) placeholder.dataset.oselectPlaceholder = placeholder.textContent = liElem.textContent;
-        }
+      option.classList.add("selected");
+      this.elem.querySelector(`option[value="${option.dataset.value}"]`).setAttribute("selected", "selected");
     }
+  }
+
+  _isNotMultiple(option) {
+    this.oSelect.querySelectorAll("li").forEach(item => {
+      item.classList.remove("selected");
+      this.elem.querySelector(`option[value="${item.dataset.value}"]`).removeAttribute("selected");
+    });
+    option.classList.add("selected");
+    this.elem.querySelector(`option[value="${option.dataset.value}"]`).setAttribute("selected", "selected");
+  }
+
+  _resetSearch() {
+    this.oSelect.querySelector("input").value = "";
+    let options = this.oSelect.querySelectorAll("li");
+    options.forEach(item => {
+      if (item.classList.contains("hidden")) item.classList.remove("hidden");
+    });
+  }
+
+  _update() {
+    this.getData();
+    this.oSelect.querySelector("ul").innerHTML = "";
+    this._addOptions();
+    this.oSelect.querySelectorAll("li").forEach(option => option.addEventListener("click", (ev) => this._clickedOption(ev, option)));
+    this._changePlaceholder();
+  }
 }
 
-function closeListIfOutsideClick(parentElem, childElem) {
-    window.addEventListener("click", (ev) => {
-        if (ev.target !== parentElem && !parentElem.contains(ev.target)) {
-            if (!childElem.classList.contains("hidden")) {
-                childElem.classList.add("hidden");
-            }
-        }
-    })
+// Utilities
+
+const attr = (element, key) => {
+  if (element[key] !== undefined) {
+    return element[key];
+  }
+  return element.getAttribute(key);
 }
 
-function updateSelects(dropdown, placeholder) {
-    const select = dropdown.parentNode.parentNode.querySelector("select");
-    let list = dropdown.querySelector("ul");
-    list.innerHTML = "";
+const getNumberOfSelectedOptions = (options) => {
+  let selected = 0;
+  options.forEach(option => {
+    if (option.selected) selected++;
+  });
+  return selected;
+}
 
-    for (const option of select.options) {
-        list.append(oSelectOptionElem(select, dropdown.parentNode, option, placeholder));
+const getSelectedOption = (options) => {
+  for (const option of options) {
+    if (option.selected) {
+      return option;
+      break;
     }
-    sortSelectedOptions(list);
+  }
+  return options[0];
 }
 
-/**
- * Insert new element after existing element in DOM
- * @param newElem
- * @param existingElem
- */
-function insertAfter(newElem, existingElem) {
-    existingElem.parentNode.insertBefore(newElem, existingElem.nextSibling);
-}
-
-/**
- * Adds a top margin to ensure equal space between elements, regardless of the size of the parent element.
- * @param parent
- * @param child
- */
-function dropdownSpacing(parent, child) {
-    child.style.marginTop = `${parent.offsetHeight + 0.25 * 16}px`;
-}
-
-function countSelectedOption(option) {
-    let selectedOptions = 0;
-    for (let optElem of option.parentNode.children) {
-        if (optElem.selected) selectedOptions++;
-    }
-    return selectedOptions;
-}
-
-function sortSelectedOptions(selectElem) {
-    const liElements = Array.from(selectElem.querySelectorAll("li"));
-
-    const selectedElements = liElements.filter(li => li.classList.contains("selected"));
-    const unselectedElements = liElements.filter(li => !li.classList.contains("selected"));
-
-    selectElem.innerHTML = "";
-
-    selectedElements.forEach(li => selectElem.appendChild(li));
-    unselectedElements.forEach(li => selectElem.appendChild(li));
-}
+const modalSpacing = (select) => select.querySelector(".dropdown").style.marginTop = `${select.offsetHeight + 0.25 * 16}px`;
