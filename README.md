@@ -79,4 +79,4 @@ const options = {
 };
 ```
 
-Full documentation : https://github.com/Schmileblick/olga-select
+Full documentation : https://schmileblick.github.io/olga-select/
