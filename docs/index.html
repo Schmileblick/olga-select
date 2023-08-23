@@ -88,6 +88,25 @@
                 <h2>Options</h2>
 
                 <div>
+                    <h3>Default</h3>
+<pre><code class="language-javascript">const options = {
+    placeholder: "Select an option",
+    selectedplaceholder: "selected",
+    searchplaceholder: "Search",
+    config: {
+        updatable: false,
+        sortable: false,
+        searchable: false,
+    },
+    classes: {
+        select: ["dselect"],
+        dropdown: ["modal"],
+        search: ["search"]
+    }
+};</code></pre>
+                </div>
+
+                <div>
                     <h3>Placeholders</h3>
                     <p>You can change three placeholders.</p>
                     <table>
@@ -129,19 +148,21 @@ new OlgaSelect(document.getElementById("your_select"), options);</code></pre>
                 <div>
                     <h3>Searchable</h3>
                     <p>You can add a seach to the select element</p>
-                    <pre><code class="language-javascript">let options = {searchable: true}<br>new OlgaSelect(document.getElementById("your_select"), options);</code></pre>
+<pre><code class="language-javascript">let options = {config: {searchable: true}}
+new OlgaSelect(document.getElementById("your_select"), options);</code></pre>
                 </div>
 
                 <div>
                     <h3>Sortable</h3>
                     <p>The list of options can be long. To find selected items easily, you can specify <kbd>sortable: true</kbd></p>
-                    <pre><code class="language-javascript">let options = {sortable: true}<br>new OlgaSelect(document.getElementById("your_select"), options);</code></pre>
+<pre><code class="language-javascript">let options = {config: {sortable: true}}
+new OlgaSelect(document.getElementById("your_select"), options);</code></pre>
                 </div>
 
                 <div>
                     <h3>Updatable</h3>
                     <p>You may need to update the list of options. Use <kbd>updatable</kbd></p>
-<pre><code class="language-javascript">let options = {updatable: true}
+<pre><code class="language-javascript">let options = {config: {updatable: true}}
 new OlgaSelect(document.getElementById("your_select"), options);</code></pre>
                 </div>
 

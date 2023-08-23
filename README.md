@@ -30,6 +30,26 @@ new OlgaSelect(document.getElementById("your_select"));
 
 ## Options
 
+### Default
+
+```js
+const options = {
+  placeholder: "Select an option",
+  selectedplaceholder: "selected",
+  searchplaceholder: "Search",
+  config: {
+    updatable: false,
+    sortable: false,
+    searchable: false,
+  },
+  classes: {
+    select: ["dselect"],
+    dropdown: ["modal"],
+    search: ["search"]
+  }
+};
+```
+
 ### Placeholders
 
 | Attribute           | Default                | Desc.                                                                                                                                    |
@@ -43,7 +63,8 @@ new OlgaSelect(document.getElementById("your_select"));
 You can add a seach to the select element
 
 ```js
-let options = {searchable: true}new OlgaSelect(document.getElementById("your_select"), options);
+let options = {config: {searchable: true}}
+new OlgaSelect(document.getElementById("your_select"), options);
 ```
 
 ### Sortable
@@ -51,7 +72,8 @@ let options = {searchable: true}new OlgaSelect(document.getElementById("your_sel
 The list of options can be long. To find selected items easily, you can specify `sortable: true`
 
 ```js
-let options = {sortable: true}new OlgaSelect(document.getElementById("your_select"), options);
+let options = {config: {sortable: true}}
+new OlgaSelect(document.getElementById("your_select"), options);
 ```
 
 ### Updatable
@@ -59,7 +81,7 @@ let options = {sortable: true}new OlgaSelect(document.getElementById("your_selec
 You may need to update the list of options. Use `updatable`
 
 ```js
-let options = {updatable: true}
+let options = {config: {updatable: true}}
 new OlgaSelect(document.getElementById("your_select"), options);
 ```
 

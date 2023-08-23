@@ -10,7 +10,7 @@ const defaultOptions = {
     searchable: false,
   },
   classes: {
-    select: ["select"],
+    select: ["dselect"],
     dropdown: ["modal"],
     search: ["search"]
   }
