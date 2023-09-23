@@ -1,4 +1,4 @@
-import "../scss/olga-select.scss";
+// import "../scss/olga-select.scss";
 
 const defaultOptions = {
   placeholder: "Select an option",
@@ -42,7 +42,7 @@ export default class OlgaSelect {
   };
 
   generate() {
-    this.elem.classList.add("hidden");
+    this.elem.classList.add("ohidden");
 
     this.getData();
     this.createDropdown();
@@ -74,7 +74,7 @@ export default class OlgaSelect {
     let spanPlaceholder = `<span>${this.placeholder}</span>`;
     let list = `<ul></ul>`;
 
-    let dropdown = `<div class="${this.dropdownClass.join(" ")} dropdown hidden">`;
+    let dropdown = `<div class="${this.dropdownClass.join(" ")} dropdown ohidden">`;
     if (this.searchable) dropdown += search;
     dropdown += list;
     dropdown += `</div>`;
@@ -124,12 +124,12 @@ export default class OlgaSelect {
     let dropdown = this.oSelect.querySelector(".dropdown");
 
     if (ev.target === this.oSelect || ev.target === this.oSelect.querySelector("span")) {
-      if (dropdown.classList.contains("hidden")) {
-        dropdown.classList.remove("hidden");
+      if (dropdown.classList.contains("ohidden")) {
+        dropdown.classList.remove("ohidden");
       } else {
-        dropdown.classList.add("hidden");
+        dropdown.classList.add("ohidden");
       }
-      if (this.updatable && !dropdown.classList.contains("hidden")) this._update();
+      if (this.updatable && !dropdown.classList.contains("ohidden")) this._update();
     }
 
     window.addEventListener("click", (ev) => this._clickOutsideModal(ev, dropdown), true);
@@ -148,9 +148,9 @@ export default class OlgaSelect {
     let list = this.oSelect.querySelectorAll("li");
     list.forEach(item => {
       if (!item.innerText.includes(search)) {
-        if (!item.classList.contains("hidden")) item.classList.add("hidden");
+        if (!item.classList.contains("ohidden")) item.classList.add("ohidden");
       } else {
-        if (item.classList.contains("hidden")) item.classList.remove("hidden");
+        if (item.classList.contains("ohidden")) item.classList.remove("ohidden");
       }
     });
   }
@@ -158,8 +158,8 @@ export default class OlgaSelect {
   _clickOutsideModal(ev, dropdown) {
     if (ev.target !== this.oSelect) {
       if (ev.target !== dropdown && !dropdown.contains(ev.target)) {
-        if (!dropdown.classList.contains("hidden")) {
-          dropdown.classList.add("hidden");
+        if (!dropdown.classList.contains("ohidden")) {
+          dropdown.classList.add("ohidden");
         }
       }
     }
@@ -200,7 +200,7 @@ export default class OlgaSelect {
     this.oSelect.querySelector("input").value = "";
     let options = this.oSelect.querySelectorAll("li");
     options.forEach(item => {
-      if (item.classList.contains("hidden")) item.classList.remove("hidden");
+      if (item.classList.contains("ohidden")) item.classList.remove("ohidden");
     });
   }
 
