@@ -1,6 +1,6 @@
 {
   "name": "olga-select",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A small Vanilla JavaScript library for enhanced native select elements.",
   "source": "src/js/olga-select.js",
   "main": "dist/js/olga-select.js",
