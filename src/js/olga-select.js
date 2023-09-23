@@ -1,4 +1,4 @@
-// import "../scss/olga-select.scss";
+import "../scss/olga-select.scss";
 
 const defaultOptions = {
   placeholder: "Select an option",
